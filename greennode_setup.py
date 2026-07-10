@@ -50,7 +50,7 @@ def load_models():
 
     # Load reranker
     print(f"\n[2] Loading Reranker: {RERANKER_MODEL_NAME}")
-    reranker = CrossEncoder(RERANKER_MODEL_NAME, device=device)
+    reranker = CrossEncoder(RERANKER_MODEL_NAME, device=device,trust_remote_code=True)
     print(f"    ✅ Loaded! Type: {type(reranker).__name__}")
 
     return embedding_model, reranker, device
@@ -124,10 +124,10 @@ def load_cache():
         cache = json.load(f)
 
     if cache["config"]["embedding_model"] != EMBEDDING_MODEL_NAME:
-        print("⚠️  Cache config mismatch, reloading data...")
+        print("  Cache config mismatch, reloading data...")
         return None
 
-    print(f"\n✅ Loaded data from cache: {DATA_CACHE_FILE}")
+    print(f"\n Loaded data from cache: {DATA_CACHE_FILE}")
     return cache["corpus"], cache["queries"], cache["qrels"]
 
 
@@ -135,10 +135,7 @@ def load_cache():
 # MAIN
 # ============================================================
 def main():
-    print("\n" + "╔" + "=" * 58 + "╗")
-    print("║" + " " * 10 + "SETUP: LOAD MODELS & DATA" + " " * 18 + "║")
-    print("╚" + "=" * 58 + "╝")
-
+ 
     # Step 1: Load models
     embedding_model, reranker, device = load_models()
 
@@ -154,14 +151,14 @@ def main():
     print("\n" + "=" * 60)
     print("SETUP COMPLETE")
     print("=" * 60)
-    print(f"\n📊 Embedding Model: {EMBEDDING_MODEL_NAME}")
-    print(f"🔄 Reranker Model: {RERANKER_MODEL_NAME}")
-    print(f"📁 Dataset: {DATASET_PATH}")
-    print(f"📦 Corpus: {len(corpus)} documents")
-    print(f"📦 Queries: {len(queries)} queries")
+    print(f"\n Embedding Model: {EMBEDDING_MODEL_NAME}")
+    print(f" Reranker Model: {RERANKER_MODEL_NAME}")
+    print(f" Dataset: {DATASET_PATH}")
+    print(f" Corpus: {len(corpus)} documents")
+    print(f" Queries: {len(queries)} queries")
 
     print("\n" + "-" * 60)
-    print("✅ Ready to run evaluation!")
+    print(" Ready to run evaluation!")
     print("   python greennode_evaluate.py")
 
     return {
